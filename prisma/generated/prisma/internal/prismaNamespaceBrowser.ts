@@ -58,7 +58,8 @@ export const ModelName = {
   MyUser: 'MyUser',
   MyVendor: 'MyVendor',
   MyWorker: 'MyWorker',
-  Work: 'Work'
+  Work: 'Work',
+  Agent: 'Agent'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -67,12 +68,12 @@ export type ModelName = (typeof ModelName)[keyof typeof ModelName]
  * Enums
  */
 
-export const TransactionIsolationLevel = runtime.makeStrictEnum({
+export const TransactionIsolationLevel = {
   ReadUncommitted: 'ReadUncommitted',
   ReadCommitted: 'ReadCommitted',
   RepeatableRead: 'RepeatableRead',
   Serializable: 'Serializable'
-} as const)
+} as const
 
 export type TransactionIsolationLevel = (typeof TransactionIsolationLevel)[keyof typeof TransactionIsolationLevel]
 
@@ -134,7 +135,8 @@ export const MyUserScalarFieldEnum = {
   role: 'role',
   lat: 'lat',
   name: 'name',
-  lng: 'lng'
+  lng: 'lng',
+  time: 'time'
 } as const
 
 export type MyUserScalarFieldEnum = (typeof MyUserScalarFieldEnum)[keyof typeof MyUserScalarFieldEnum]
@@ -189,6 +191,17 @@ export const WorkScalarFieldEnum = {
 } as const
 
 export type WorkScalarFieldEnum = (typeof WorkScalarFieldEnum)[keyof typeof WorkScalarFieldEnum]
+
+
+export const AgentScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  isOnline: 'isOnline',
+  vechileType: 'vechileType',
+  myWorkerId: 'myWorkerId'
+} as const
+
+export type AgentScalarFieldEnum = (typeof AgentScalarFieldEnum)[keyof typeof AgentScalarFieldEnum]
 
 
 export const SortOrder = {

@@ -268,7 +268,7 @@ export type MyWorkerGroupByOutputType = {
   _max: MyWorkerMaxAggregateOutputType | null
 }
 
-export type GetMyWorkerGroupByPayload<T extends MyWorkerGroupByArgs> = Prisma.PrismaPromise<
+type GetMyWorkerGroupByPayload<T extends MyWorkerGroupByArgs> = Prisma.PrismaPromise<
   Array<
     Prisma.PickEnumerable<MyWorkerGroupByOutputType, T['by']> &
       {
@@ -301,6 +301,7 @@ export type MyWorkerWhereInput = {
   dailyWage?: Prisma.FloatFilter<"MyWorker"> | number
   age?: Prisma.IntNullableFilter<"MyWorker"> | number | null
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
+  agent?: Prisma.AgentListRelationFilter
 }
 
 export type MyWorkerOrderByWithRelationInput = {
@@ -318,6 +319,7 @@ export type MyWorkerOrderByWithRelationInput = {
   dailyWage?: Prisma.SortOrder
   age?: Prisma.SortOrderInput | Prisma.SortOrder
   user?: Prisma.UserOrderByWithRelationInput
+  agent?: Prisma.AgentOrderByRelationAggregateInput
 }
 
 export type MyWorkerWhereUniqueInput = Prisma.AtLeast<{
@@ -338,6 +340,7 @@ export type MyWorkerWhereUniqueInput = Prisma.AtLeast<{
   dailyWage?: Prisma.FloatFilter<"MyWorker"> | number
   age?: Prisma.IntNullableFilter<"MyWorker"> | number | null
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
+  agent?: Prisma.AgentListRelationFilter
 }, "id" | "userId">
 
 export type MyWorkerOrderByWithAggregationInput = {
@@ -394,6 +397,7 @@ export type MyWorkerCreateInput = {
   dailyWage: number
   age?: number | null
   user: Prisma.UserCreateNestedOneWithoutWorkerInput
+  agent?: Prisma.AgentCreateNestedManyWithoutWorkerInput
 }
 
 export type MyWorkerUncheckedCreateInput = {
@@ -410,6 +414,7 @@ export type MyWorkerUncheckedCreateInput = {
   role?: string | null
   dailyWage: number
   age?: number | null
+  agent?: Prisma.AgentUncheckedCreateNestedManyWithoutWorkerInput
 }
 
 export type MyWorkerUpdateInput = {
@@ -426,6 +431,7 @@ export type MyWorkerUpdateInput = {
   dailyWage?: Prisma.FloatFieldUpdateOperationsInput | number
   age?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   user?: Prisma.UserUpdateOneRequiredWithoutWorkerNestedInput
+  agent?: Prisma.AgentUpdateManyWithoutWorkerNestedInput
 }
 
 export type MyWorkerUncheckedUpdateInput = {
@@ -442,6 +448,7 @@ export type MyWorkerUncheckedUpdateInput = {
   role?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   dailyWage?: Prisma.FloatFieldUpdateOperationsInput | number
   age?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  agent?: Prisma.AgentUncheckedUpdateManyWithoutWorkerNestedInput
 }
 
 export type MyWorkerCreateManyInput = {
@@ -602,6 +609,22 @@ export type FloatFieldUpdateOperationsInput = {
   divide?: number
 }
 
+export type MyWorkerCreateNestedOneWithoutAgentInput = {
+  create?: Prisma.XOR<Prisma.MyWorkerCreateWithoutAgentInput, Prisma.MyWorkerUncheckedCreateWithoutAgentInput>
+  connectOrCreate?: Prisma.MyWorkerCreateOrConnectWithoutAgentInput
+  connect?: Prisma.MyWorkerWhereUniqueInput
+}
+
+export type MyWorkerUpdateOneWithoutAgentNestedInput = {
+  create?: Prisma.XOR<Prisma.MyWorkerCreateWithoutAgentInput, Prisma.MyWorkerUncheckedCreateWithoutAgentInput>
+  connectOrCreate?: Prisma.MyWorkerCreateOrConnectWithoutAgentInput
+  upsert?: Prisma.MyWorkerUpsertWithoutAgentInput
+  disconnect?: Prisma.MyWorkerWhereInput | boolean
+  delete?: Prisma.MyWorkerWhereInput | boolean
+  connect?: Prisma.MyWorkerWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.MyWorkerUpdateToOneWithWhereWithoutAgentInput, Prisma.MyWorkerUpdateWithoutAgentInput>, Prisma.MyWorkerUncheckedUpdateWithoutAgentInput>
+}
+
 export type MyWorkerCreateWithoutUserInput = {
   id?: string
   name?: string | null
@@ -615,6 +638,7 @@ export type MyWorkerCreateWithoutUserInput = {
   role?: string | null
   dailyWage: number
   age?: number | null
+  agent?: Prisma.AgentCreateNestedManyWithoutWorkerInput
 }
 
 export type MyWorkerUncheckedCreateWithoutUserInput = {
@@ -630,6 +654,7 @@ export type MyWorkerUncheckedCreateWithoutUserInput = {
   role?: string | null
   dailyWage: number
   age?: number | null
+  agent?: Prisma.AgentUncheckedCreateNestedManyWithoutWorkerInput
 }
 
 export type MyWorkerCreateOrConnectWithoutUserInput = {
@@ -661,6 +686,7 @@ export type MyWorkerUpdateWithoutUserInput = {
   role?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   dailyWage?: Prisma.FloatFieldUpdateOperationsInput | number
   age?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  agent?: Prisma.AgentUpdateManyWithoutWorkerNestedInput
 }
 
 export type MyWorkerUncheckedUpdateWithoutUserInput = {
@@ -676,8 +702,118 @@ export type MyWorkerUncheckedUpdateWithoutUserInput = {
   role?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   dailyWage?: Prisma.FloatFieldUpdateOperationsInput | number
   age?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  agent?: Prisma.AgentUncheckedUpdateManyWithoutWorkerNestedInput
 }
 
+export type MyWorkerCreateWithoutAgentInput = {
+  id?: string
+  name?: string | null
+  mobileNumber?: string | null
+  lat?: number | null
+  lan?: number | null
+  occupation: string
+  address?: string | null
+  experience?: number | null
+  hourlyWages?: number | null
+  role?: string | null
+  dailyWage: number
+  age?: number | null
+  user: Prisma.UserCreateNestedOneWithoutWorkerInput
+}
+
+export type MyWorkerUncheckedCreateWithoutAgentInput = {
+  id?: string
+  userId: string
+  name?: string | null
+  mobileNumber?: string | null
+  lat?: number | null
+  lan?: number | null
+  occupation: string
+  address?: string | null
+  experience?: number | null
+  hourlyWages?: number | null
+  role?: string | null
+  dailyWage: number
+  age?: number | null
+}
+
+export type MyWorkerCreateOrConnectWithoutAgentInput = {
+  where: Prisma.MyWorkerWhereUniqueInput
+  create: Prisma.XOR<Prisma.MyWorkerCreateWithoutAgentInput, Prisma.MyWorkerUncheckedCreateWithoutAgentInput>
+}
+
+export type MyWorkerUpsertWithoutAgentInput = {
+  update: Prisma.XOR<Prisma.MyWorkerUpdateWithoutAgentInput, Prisma.MyWorkerUncheckedUpdateWithoutAgentInput>
+  create: Prisma.XOR<Prisma.MyWorkerCreateWithoutAgentInput, Prisma.MyWorkerUncheckedCreateWithoutAgentInput>
+  where?: Prisma.MyWorkerWhereInput
+}
+
+export type MyWorkerUpdateToOneWithWhereWithoutAgentInput = {
+  where?: Prisma.MyWorkerWhereInput
+  data: Prisma.XOR<Prisma.MyWorkerUpdateWithoutAgentInput, Prisma.MyWorkerUncheckedUpdateWithoutAgentInput>
+}
+
+export type MyWorkerUpdateWithoutAgentInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  mobileNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lat?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  lan?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  occupation?: Prisma.StringFieldUpdateOperationsInput | string
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  experience?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  hourlyWages?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  role?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dailyWage?: Prisma.FloatFieldUpdateOperationsInput | number
+  age?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  user?: Prisma.UserUpdateOneRequiredWithoutWorkerNestedInput
+}
+
+export type MyWorkerUncheckedUpdateWithoutAgentInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  mobileNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lat?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  lan?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  occupation?: Prisma.StringFieldUpdateOperationsInput | string
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  experience?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  hourlyWages?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  role?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dailyWage?: Prisma.FloatFieldUpdateOperationsInput | number
+  age?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+}
+
+
+/**
+ * Count Type MyWorkerCountOutputType
+ */
+
+export type MyWorkerCountOutputType = {
+  agent: number
+}
+
+export type MyWorkerCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  agent?: boolean | MyWorkerCountOutputTypeCountAgentArgs
+}
+
+/**
+ * MyWorkerCountOutputType without action
+ */
+export type MyWorkerCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the MyWorkerCountOutputType
+   */
+  select?: Prisma.MyWorkerCountOutputTypeSelect<ExtArgs> | null
+}
+
+/**
+ * MyWorkerCountOutputType without action
+ */
+export type MyWorkerCountOutputTypeCountAgentArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.AgentWhereInput
+}
 
 
 export type MyWorkerSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -695,6 +831,8 @@ export type MyWorkerSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
   dailyWage?: boolean
   age?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  agent?: boolean | Prisma.MyWorker$agentArgs<ExtArgs>
+  _count?: boolean | Prisma.MyWorkerCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["myWorker"]>
 
 export type MyWorkerSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -750,6 +888,8 @@ export type MyWorkerSelectScalar = {
 export type MyWorkerOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "name" | "mobileNumber" | "lat" | "lan" | "occupation" | "address" | "experience" | "hourlyWages" | "role" | "dailyWage" | "age", ExtArgs["result"]["myWorker"]>
 export type MyWorkerInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  agent?: boolean | Prisma.MyWorker$agentArgs<ExtArgs>
+  _count?: boolean | Prisma.MyWorkerCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type MyWorkerIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -762,6 +902,7 @@ export type $MyWorkerPayload<ExtArgs extends runtime.Types.Extensions.InternalAr
   name: "MyWorker"
   objects: {
     user: Prisma.$UserPayload<ExtArgs>
+    agent: Prisma.$AgentPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1172,6 +1313,7 @@ readonly fields: MyWorkerFieldRefs;
 export interface Prisma__MyWorkerClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   user<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  agent<T extends Prisma.MyWorker$agentArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.MyWorker$agentArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AgentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1410,11 +1552,6 @@ export type MyWorkerFindManyArgs<ExtArgs extends runtime.Types.Extensions.Intern
    * Skip the first `n` MyWorkers.
    */
   skip?: number
-  /**
-   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-   * 
-   * Filter by unique combinations of MyWorkers.
-   */
   distinct?: Prisma.MyWorkerScalarFieldEnum | Prisma.MyWorkerScalarFieldEnum[]
 }
 
@@ -1612,6 +1749,30 @@ export type MyWorkerDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Inte
    * Limit how many MyWorkers to delete.
    */
   limit?: number
+}
+
+/**
+ * MyWorker.agent
+ */
+export type MyWorker$agentArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Agent
+   */
+  select?: Prisma.AgentSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Agent
+   */
+  omit?: Prisma.AgentOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.AgentInclude<ExtArgs> | null
+  where?: Prisma.AgentWhereInput
+  orderBy?: Prisma.AgentOrderByWithRelationInput | Prisma.AgentOrderByWithRelationInput[]
+  cursor?: Prisma.AgentWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.AgentScalarFieldEnum | Prisma.AgentScalarFieldEnum[]
 }
 
 /**

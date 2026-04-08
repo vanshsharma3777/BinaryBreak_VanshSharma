@@ -29,11 +29,13 @@ export type AggregateMyUser = {
 export type MyUserAvgAggregateOutputType = {
   lat: number | null
   lng: number | null
+  time: number | null
 }
 
 export type MyUserSumAggregateOutputType = {
   lat: number | null
   lng: number | null
+  time: number | null
 }
 
 export type MyUserMinAggregateOutputType = {
@@ -45,6 +47,7 @@ export type MyUserMinAggregateOutputType = {
   lat: number | null
   name: string | null
   lng: number | null
+  time: number | null
 }
 
 export type MyUserMaxAggregateOutputType = {
@@ -56,6 +59,7 @@ export type MyUserMaxAggregateOutputType = {
   lat: number | null
   name: string | null
   lng: number | null
+  time: number | null
 }
 
 export type MyUserCountAggregateOutputType = {
@@ -67,6 +71,7 @@ export type MyUserCountAggregateOutputType = {
   lat: number
   name: number
   lng: number
+  time: number
   _all: number
 }
 
@@ -74,11 +79,13 @@ export type MyUserCountAggregateOutputType = {
 export type MyUserAvgAggregateInputType = {
   lat?: true
   lng?: true
+  time?: true
 }
 
 export type MyUserSumAggregateInputType = {
   lat?: true
   lng?: true
+  time?: true
 }
 
 export type MyUserMinAggregateInputType = {
@@ -90,6 +97,7 @@ export type MyUserMinAggregateInputType = {
   lat?: true
   name?: true
   lng?: true
+  time?: true
 }
 
 export type MyUserMaxAggregateInputType = {
@@ -101,6 +109,7 @@ export type MyUserMaxAggregateInputType = {
   lat?: true
   name?: true
   lng?: true
+  time?: true
 }
 
 export type MyUserCountAggregateInputType = {
@@ -112,6 +121,7 @@ export type MyUserCountAggregateInputType = {
   lat?: true
   name?: true
   lng?: true
+  time?: true
   _all?: true
 }
 
@@ -210,6 +220,7 @@ export type MyUserGroupByOutputType = {
   lat: number | null
   name: string | null
   lng: number | null
+  time: number | null
   _count: MyUserCountAggregateOutputType | null
   _avg: MyUserAvgAggregateOutputType | null
   _sum: MyUserSumAggregateOutputType | null
@@ -217,7 +228,7 @@ export type MyUserGroupByOutputType = {
   _max: MyUserMaxAggregateOutputType | null
 }
 
-export type GetMyUserGroupByPayload<T extends MyUserGroupByArgs> = Prisma.PrismaPromise<
+type GetMyUserGroupByPayload<T extends MyUserGroupByArgs> = Prisma.PrismaPromise<
   Array<
     Prisma.PickEnumerable<MyUserGroupByOutputType, T['by']> &
       {
@@ -244,6 +255,7 @@ export type MyUserWhereInput = {
   lat?: Prisma.FloatNullableFilter<"MyUser"> | number | null
   name?: Prisma.StringNullableFilter<"MyUser"> | string | null
   lng?: Prisma.FloatNullableFilter<"MyUser"> | number | null
+  time?: Prisma.FloatNullableFilter<"MyUser"> | number | null
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   work?: Prisma.WorkListRelationFilter
 }
@@ -257,6 +269,7 @@ export type MyUserOrderByWithRelationInput = {
   lat?: Prisma.SortOrderInput | Prisma.SortOrder
   name?: Prisma.SortOrderInput | Prisma.SortOrder
   lng?: Prisma.SortOrderInput | Prisma.SortOrder
+  time?: Prisma.SortOrderInput | Prisma.SortOrder
   user?: Prisma.UserOrderByWithRelationInput
   work?: Prisma.WorkOrderByRelationAggregateInput
 }
@@ -273,6 +286,7 @@ export type MyUserWhereUniqueInput = Prisma.AtLeast<{
   lat?: Prisma.FloatNullableFilter<"MyUser"> | number | null
   name?: Prisma.StringNullableFilter<"MyUser"> | string | null
   lng?: Prisma.FloatNullableFilter<"MyUser"> | number | null
+  time?: Prisma.FloatNullableFilter<"MyUser"> | number | null
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   work?: Prisma.WorkListRelationFilter
 }, "id" | "userId">
@@ -286,6 +300,7 @@ export type MyUserOrderByWithAggregationInput = {
   lat?: Prisma.SortOrderInput | Prisma.SortOrder
   name?: Prisma.SortOrderInput | Prisma.SortOrder
   lng?: Prisma.SortOrderInput | Prisma.SortOrder
+  time?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.MyUserCountOrderByAggregateInput
   _avg?: Prisma.MyUserAvgOrderByAggregateInput
   _max?: Prisma.MyUserMaxOrderByAggregateInput
@@ -305,6 +320,7 @@ export type MyUserScalarWhereWithAggregatesInput = {
   lat?: Prisma.FloatNullableWithAggregatesFilter<"MyUser"> | number | null
   name?: Prisma.StringNullableWithAggregatesFilter<"MyUser"> | string | null
   lng?: Prisma.FloatNullableWithAggregatesFilter<"MyUser"> | number | null
+  time?: Prisma.FloatNullableWithAggregatesFilter<"MyUser"> | number | null
 }
 
 export type MyUserCreateInput = {
@@ -315,6 +331,7 @@ export type MyUserCreateInput = {
   lat?: number | null
   name?: string | null
   lng?: number | null
+  time?: number | null
   user: Prisma.UserCreateNestedOneWithoutUserInput
   work?: Prisma.WorkCreateNestedManyWithoutUserInput
 }
@@ -328,6 +345,7 @@ export type MyUserUncheckedCreateInput = {
   lat?: number | null
   name?: string | null
   lng?: number | null
+  time?: number | null
   work?: Prisma.WorkUncheckedCreateNestedManyWithoutUserInput
 }
 
@@ -339,6 +357,7 @@ export type MyUserUpdateInput = {
   lat?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lng?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  time?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   user?: Prisma.UserUpdateOneRequiredWithoutUserNestedInput
   work?: Prisma.WorkUpdateManyWithoutUserNestedInput
 }
@@ -352,6 +371,7 @@ export type MyUserUncheckedUpdateInput = {
   lat?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lng?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  time?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   work?: Prisma.WorkUncheckedUpdateManyWithoutUserNestedInput
 }
 
@@ -364,6 +384,7 @@ export type MyUserCreateManyInput = {
   lat?: number | null
   name?: string | null
   lng?: number | null
+  time?: number | null
 }
 
 export type MyUserUpdateManyMutationInput = {
@@ -374,6 +395,7 @@ export type MyUserUpdateManyMutationInput = {
   lat?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lng?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  time?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
 }
 
 export type MyUserUncheckedUpdateManyInput = {
@@ -385,6 +407,7 @@ export type MyUserUncheckedUpdateManyInput = {
   lat?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lng?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  time?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
 }
 
 export type MyUserNullableScalarRelationFilter = {
@@ -401,11 +424,13 @@ export type MyUserCountOrderByAggregateInput = {
   lat?: Prisma.SortOrder
   name?: Prisma.SortOrder
   lng?: Prisma.SortOrder
+  time?: Prisma.SortOrder
 }
 
 export type MyUserAvgOrderByAggregateInput = {
   lat?: Prisma.SortOrder
   lng?: Prisma.SortOrder
+  time?: Prisma.SortOrder
 }
 
 export type MyUserMaxOrderByAggregateInput = {
@@ -417,6 +442,7 @@ export type MyUserMaxOrderByAggregateInput = {
   lat?: Prisma.SortOrder
   name?: Prisma.SortOrder
   lng?: Prisma.SortOrder
+  time?: Prisma.SortOrder
 }
 
 export type MyUserMinOrderByAggregateInput = {
@@ -428,11 +454,13 @@ export type MyUserMinOrderByAggregateInput = {
   lat?: Prisma.SortOrder
   name?: Prisma.SortOrder
   lng?: Prisma.SortOrder
+  time?: Prisma.SortOrder
 }
 
 export type MyUserSumOrderByAggregateInput = {
   lat?: Prisma.SortOrder
   lng?: Prisma.SortOrder
+  time?: Prisma.SortOrder
 }
 
 export type MyUserScalarRelationFilter = {
@@ -502,6 +530,7 @@ export type MyUserCreateWithoutUserInput = {
   lat?: number | null
   name?: string | null
   lng?: number | null
+  time?: number | null
   work?: Prisma.WorkCreateNestedManyWithoutUserInput
 }
 
@@ -513,6 +542,7 @@ export type MyUserUncheckedCreateWithoutUserInput = {
   lat?: number | null
   name?: string | null
   lng?: number | null
+  time?: number | null
   work?: Prisma.WorkUncheckedCreateNestedManyWithoutUserInput
 }
 
@@ -540,6 +570,7 @@ export type MyUserUpdateWithoutUserInput = {
   lat?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lng?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  time?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   work?: Prisma.WorkUpdateManyWithoutUserNestedInput
 }
 
@@ -551,6 +582,7 @@ export type MyUserUncheckedUpdateWithoutUserInput = {
   lat?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lng?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  time?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   work?: Prisma.WorkUncheckedUpdateManyWithoutUserNestedInput
 }
 
@@ -562,6 +594,7 @@ export type MyUserCreateWithoutWorkInput = {
   lat?: number | null
   name?: string | null
   lng?: number | null
+  time?: number | null
   user: Prisma.UserCreateNestedOneWithoutUserInput
 }
 
@@ -574,6 +607,7 @@ export type MyUserUncheckedCreateWithoutWorkInput = {
   lat?: number | null
   name?: string | null
   lng?: number | null
+  time?: number | null
 }
 
 export type MyUserCreateOrConnectWithoutWorkInput = {
@@ -600,6 +634,7 @@ export type MyUserUpdateWithoutWorkInput = {
   lat?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lng?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  time?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   user?: Prisma.UserUpdateOneRequiredWithoutUserNestedInput
 }
 
@@ -612,6 +647,7 @@ export type MyUserUncheckedUpdateWithoutWorkInput = {
   lat?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lng?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  time?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
 }
 
 
@@ -654,6 +690,7 @@ export type MyUserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   lat?: boolean
   name?: boolean
   lng?: boolean
+  time?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   work?: boolean | Prisma.MyUser$workArgs<ExtArgs>
   _count?: boolean | Prisma.MyUserCountOutputTypeDefaultArgs<ExtArgs>
@@ -668,6 +705,7 @@ export type MyUserSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extens
   lat?: boolean
   name?: boolean
   lng?: boolean
+  time?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["myUser"]>
 
@@ -680,6 +718,7 @@ export type MyUserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extens
   lat?: boolean
   name?: boolean
   lng?: boolean
+  time?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["myUser"]>
 
@@ -692,9 +731,10 @@ export type MyUserSelectScalar = {
   lat?: boolean
   name?: boolean
   lng?: boolean
+  time?: boolean
 }
 
-export type MyUserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "mobileNumber" | "address" | "role" | "lat" | "name" | "lng", ExtArgs["result"]["myUser"]>
+export type MyUserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "mobileNumber" | "address" | "role" | "lat" | "name" | "lng" | "time", ExtArgs["result"]["myUser"]>
 export type MyUserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   work?: boolean | Prisma.MyUser$workArgs<ExtArgs>
@@ -722,6 +762,7 @@ export type $MyUserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs
     lat: number | null
     name: string | null
     lng: number | null
+    time: number | null
   }, ExtArgs["result"]["myUser"]>
   composites: {}
 }
@@ -1155,6 +1196,7 @@ export interface MyUserFieldRefs {
   readonly lat: Prisma.FieldRef<"MyUser", 'Float'>
   readonly name: Prisma.FieldRef<"MyUser", 'String'>
   readonly lng: Prisma.FieldRef<"MyUser", 'Float'>
+  readonly time: Prisma.FieldRef<"MyUser", 'Float'>
 }
     
 
@@ -1351,11 +1393,6 @@ export type MyUserFindManyArgs<ExtArgs extends runtime.Types.Extensions.Internal
    * Skip the first `n` MyUsers.
    */
   skip?: number
-  /**
-   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-   * 
-   * Filter by unique combinations of MyUsers.
-   */
   distinct?: Prisma.MyUserScalarFieldEnum | Prisma.MyUserScalarFieldEnum[]
 }
 

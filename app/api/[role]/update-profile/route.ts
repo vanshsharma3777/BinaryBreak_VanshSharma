@@ -1,13 +1,11 @@
+import { auth } from "@/lib/auth";
 import getLatitudeLongitude from "@/lib/getLatitudeLongitude";
 import prisma from "@/lib/prisma";
-import { sessionDeatils } from "@/lib/sessionDetails";
-import { promises } from "dns";
-import { chownSync } from "fs";
 import { NextRequest, NextResponse } from "next/server";
 
 
 export async function PUT(request:NextRequest , {params}:{params:Promise <{role:string}>}){
-    const session = await sessionDeatils()
+    const session = await auth()
     if (!session) {
         return NextResponse.json({
             success: false,

@@ -57,3 +57,8 @@ export type MyWorker = Prisma.MyWorkerModel
  * 
  */
 export type Work = Prisma.WorkModel
+/**
+ * Model Agent
+ * 
+ */
+export type Agent = Prisma.AgentModel

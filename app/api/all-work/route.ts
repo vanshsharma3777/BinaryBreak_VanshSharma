@@ -1,11 +1,9 @@
+import { auth } from "@/lib/auth";
 import prisma from "@/lib/prisma";
-import { sessionDeatils } from "@/lib/sessionDetails";
-import { all } from "axios";
-import { tr } from "framer-motion/client";
 import { NextResponse } from "next/server";
 
 export async function GET() {
-    const session = await sessionDeatils()
+    const session = await auth()
     if(!session){
          return NextResponse.json({
                     error: "Unauthorised",

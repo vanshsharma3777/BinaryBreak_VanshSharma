@@ -1,6 +1,6 @@
 generator client {
   provider = "prisma-client"
-  output   = "../lib/generated/prisma"
+  output   = "./generated/prisma"
 }
 
 datasource db {
@@ -74,7 +74,6 @@ model MyUser {
   lng          Float?
   time         Float?
   work         Work[]
-  
 }
 
 model MyVendor {
@@ -106,9 +105,7 @@ model MyWorker {
   role         String?
   dailyWage    Float
   age          Int?
-
-  agentId   String
-  agent     Agent    @relation(fields: [agentId], references: [id])
+  agent        Agent[]
 }
 
 model Work {
@@ -128,10 +125,10 @@ model Work {
 }
 
 model Agent {
-  id String @id @default(cuid())
-  userId String
-  isOnline Boolean @default(false)
+  id          String    @id @default(cuid())
+  userId      String
+  isOnline    Boolean   @default(false)
   vechileType String
-  workers   MyWorker[]
-  
+  myWorkerId  String?
+  worker      MyWorker? @relation(fields: [myWorkerId], references: [id])
 }

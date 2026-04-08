@@ -1,7 +1,7 @@
 import { auth } from "@/lib/auth";
+import getLatitudeLongitude from "@/lib/getLatitudeLongitude";
 import prisma from "@/lib/prisma";
 import { NextRequest, NextResponse } from "next/server";
-import getLatitudeLongitude from '../../../../lib/getLatitudeLongitude'
 export async function POST(request: NextRequest, { params }: { params: Promise<{ role: string }> }) {
     const session = await auth()
 

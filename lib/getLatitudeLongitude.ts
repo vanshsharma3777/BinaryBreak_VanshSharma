@@ -1,48 +1,31 @@
-const getLatitudeLongitude = async (
-  address: string
-): Promise<{ lat: number; lng: number } | null> => {
-  if (!address || !address.trim()) {
-    console.warn("Empty address provided")
-    return null
-  }
-  const apiKey = process.env.NEXT_PUBLIC_MAP_API_KEY
-  console.log(apiKey)
-  if (!apiKey) {
-    throw new Error("MAP_API_KEY is missing in environment variables")
-  }
+import axios from 'axios';
+
+export default async function getLatitudeLongitude(address: string) {
+  if (!address) return null;
+
+  const token = process.env.NEXT_PUBLIC_LOCATIONIQ_TOKEN;
+  const url = `https://us1.locationiq.com/v1/search.php`;
 
   try {
-    const response = await fetch(
-      `https://api.opencagedata.com/geocode/v1/json?q=${encodeURIComponent(
-        address
-      )}&key=${apiKey}`,
-      {
-        headers: {
-          Accept: "application/json",
-        },
-      }
-    )
+    const response = await axios.get(url, {
+      params: {
+        key: token,
+        q: address,
+        format: 'json',
+        limit: 1,
+      },
+    });
 
-    if (!response.ok) {
-      const text = await response.text()
-      console.error("OpenCage API error:", text)
-      return null
+    if (response.data && response.data.length > 0) {
+      const { lat, lon } = response.data[0];
+      return {
+        lat: parseFloat(lat),
+        lng: parseFloat(lon),
+      };
     }
-
-    const data = await response.json()
-
-    if (!data?.results?.length) {
-      console.warn("No results found for address:", address)
-      return null
-    }
-
-    const { lat, lng } = data.results[0].geometry
-
-    return { lat, lng }
+    return null;
   } catch (error) {
-    console.error("Geocoding failed:", error)
-    return null
+    console.error("LocationIQ Geocoding Error:", error);
+    return null;
   }
 }
-
-export default getLatitudeLongitude

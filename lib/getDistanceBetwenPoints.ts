@@ -1,19 +1,37 @@
-import getLatitudeLongitude  from "./getLatitudeLongitude"
-import prisma from "./prisma"
+import axios from "axios";
 
-export async function getDistanceBetweenAddresses(
-  address1: string,
-  address2: string
-) {
-  const loc1 = await getLatitudeLongitude(address1)
-  const loc2 = await getLatitudeLongitude(address2)
-  if (loc1 &&  loc2){
-   const  distance = haversineDistance(
-    loc1.lat,
-    loc1.lng,
-    loc2.lat,
-    loc2.lng
-  )
-  return Number(distance)
+export const getUserCoordinates = (): Promise<{ lat: number; lng: number }> => {
+  return new Promise((resolve, reject) => {
+    if (!navigator.geolocation) {
+      reject("Geolocation not supported");
+    }
+    navigator.geolocation.getCurrentPosition(
+      (pos) => {
+        resolve({
+          lat: pos.coords.latitude,
+          lng: pos.coords.longitude,
+        });
+      },
+      (err) => reject(err)
+    );
+  });
+};
+
+export const getRoadDistance = async (userLat: number, userLng: number, targetLat: number, targetLng: number) => {
+  try {
+    const url = `https://router.project-osrm.org/route/v1/driving/${userLng},${userLat};${targetLng},${targetLat}?overview=false`;
+    const res = await axios.get(url);
+
+    if (res.data.code === "Ok") {
+      const route = res.data.routes[0];
+      return {
+        distance: (route.distance / 1000).toFixed(1) + " km",
+        duration: Math.round(route.duration / 60) + " mins", 
+      };
+    }
+    return { distance: "N/A", duration: "N/A" };
+  } catch (error) {
+    console.error("Distance Calculation Error:", error);
+    return { distance: "N/A", duration: "N/A" };
   }
-}
+};

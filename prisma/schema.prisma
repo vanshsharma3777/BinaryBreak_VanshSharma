@@ -1,0 +1,137 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../lib/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id            String    @id @default(cuid())
+  email         String    @unique
+  emailVerified DateTime? @map("email_verified")
+  name          String?
+  image         String?
+
+  accounts Account[]
+  sessions Session[]
+
+  vendor MyVendor?
+  worker MyWorker?
+  user   MyUser?
+
+  createdAt DateTime @default(now())
+
+  @@map("users")
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+
+model MyUser {
+  id           String  @id @default(cuid())
+  userId       String  @unique
+  user         User    @relation(fields: [userId], references: [id])
+  mobileNumber String?
+  address      String?
+  role         String?
+  lat          Float?
+  name         String?
+  lng          Float?
+  time         Float?
+  work         Work[]
+  
+}
+
+model MyVendor {
+  id           String  @id @default(cuid())
+  userId       String  @unique
+  user         User    @relation(fields: [userId], references: [id])
+  mobileNumber String?
+  address      String?
+  shopName     String?
+  role         String?
+
+  rating Float?
+  age    Int?
+  name   String?
+}
+
+model MyWorker {
+  id           String  @id @default(cuid())
+  userId       String  @unique
+  user         User    @relation(fields: [userId], references: [id])
+  name         String?
+  mobileNumber String?
+  lat          Float?
+  lan          Float?
+  occupation   String
+  address      String?
+  experience   Float?
+  hourlyWages  Float?
+  role         String?
+  dailyWage    Float
+  age          Int?
+
+  agentId   String
+  agent     Agent    @relation(fields: [agentId], references: [id])
+}
+
+model Work {
+  id          String   @id @default(cuid())
+  userId      String
+  title       String
+  description String
+  address     String?
+  photo       String[]
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  lat         Float?   @default(0.0)
+  lng         Float?   @default(0.0)
+
+  user MyUser @relation(fields: [userId], references: [id])
+}
+
+model Agent {
+  id String @id @default(cuid())
+  userId String
+  isOnline Boolean @default(false)
+  vechileType String
+  workers   MyWorker[]
+  
+}

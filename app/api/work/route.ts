@@ -1,10 +1,9 @@
+import { auth } from "@/lib/auth";
 import prisma from "@/lib/prisma";
-import { sessionDeatils } from "@/lib/sessionDetails";
 import { NextRequest, NextResponse } from "next/server";
 
-// user will post the new work
 export async function POST(request: NextRequest) {
-    const session = await sessionDeatils()
+    const session = await auth()
     if (!session) {
         return NextResponse.json({
             error: "Unauthorised",
@@ -40,7 +39,7 @@ export async function POST(request: NextRequest) {
     const { title, description, photo, isActive, lat, lng , address } = await request.json()
     const createWork = await prisma.work.create({
         data: {
-            isActive: isActive,
+            isActive: isActive, 
             userId: getUser.id,
             address,
             title,
@@ -57,9 +56,8 @@ export async function POST(request: NextRequest) {
     })
 }
 
-// for user - user will get their list of work 
 export async function GET(request: NextRequest) {
-    const session = await sessionDeatils()
+    const session = await auth()
     if (!session) {
         return NextResponse.json({
             error: "Unauthorised",

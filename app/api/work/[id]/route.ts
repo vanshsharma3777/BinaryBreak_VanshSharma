@@ -1,9 +1,9 @@
+import { auth } from "@/lib/auth";
 import prisma from "@/lib/prisma";
-import { sessionDeatils } from "@/lib/sessionDetails";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function PUT(request:NextRequest ,{ params}:{params:Promise<{id:string}>}) {
-    const session = await sessionDeatils()
+    const session = await auth()
     if(!session){
         return NextResponse.json({
             error:"Unauthorised",
@@ -62,7 +62,7 @@ export async function PUT(request:NextRequest ,{ params}:{params:Promise<{id:str
 
 
 export async function GET(request:NextRequest , {params} :{params:Promise <{id:string}>}){
-     const session = await sessionDeatils()
+     const session = await auth()
     if(!session){
         return NextResponse.json({
             error:"Unauthorised",

@@ -52,7 +52,6 @@ export default function WorkerProfilePage() {
                     const res = await axios.get(`/api/worker/details`);
                     console.log(res.data)
                     if (res.data.success === false && res.status === 201) {
-                        console.log('hello')
                         router.replace('/worker/create-profile');
                         return;
                     }

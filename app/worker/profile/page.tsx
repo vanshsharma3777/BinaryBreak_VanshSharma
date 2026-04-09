@@ -50,7 +50,9 @@ export default function WorkerProfilePage() {
                 try {
                     setLoader(true);
                     const res = await axios.get(`/api/worker/details`);
-                    if (res.data.success === true && res.status === 201) {
+                    console.log(res.data)
+                    if (res.data.success === false && res.status === 201) {
+                        console.log('hello')
                         router.replace('/worker/create-profile');
                         return;
                     }

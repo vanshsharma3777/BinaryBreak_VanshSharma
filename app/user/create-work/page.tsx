@@ -12,6 +12,7 @@ import {
     Send,
     X,
     AlertCircle,
+    Briefcase,
 } from 'lucide-react';
 import getLatitudeLongitude from "@/lib/getLatitudeLongitude";
 import { Loader } from "@/components/loader";
@@ -32,7 +33,15 @@ export default function Dashboard() {
     const [loading, setLoading] = useState(false)
     const [userDetails, setUserDetails] = useState<UserDetails | null>(null)
     const [showConfirm, setShowConfirm] = useState(false);
-
+    const [formData, setFormData] = useState({
+        title: '',
+        description: '',
+        images: [] as File[],
+        address: '',
+        lat: 0.0,
+        lng: 0.0,
+        isActive: true,
+    });
     useEffect(() => {
         async function getResponse() {
             if (status === 'unauthenticated') {
@@ -52,16 +61,6 @@ export default function Dashboard() {
         }
         getResponse()
     }, [router, role, status])
-
-    const [formData, setFormData] = useState({
-        title: '',
-        description: '',
-        images: [] as File[],
-        address:'',
-        lat: 0.0,
-        lng: 0.0,
-        isActive: true,
-    });
 
     const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -119,7 +118,7 @@ export default function Dashboard() {
         <div className="min-h-screen bg-[#030303] text-white">
             <UserHeader tab={"create"} />
             <Toaster position="top-center" />
-            
+
             <div className="relative p-6 flex items-center justify-center min-h-[calc(100vh-80px)] overflow-hidden">
                 <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_50%_0%,rgba(56,189,248,0.03),transparent_50%)] pointer-events-none" />
 
@@ -142,14 +141,42 @@ export default function Dashboard() {
 
                     <form onSubmit={validateAndConfirm} className="space-y-7">
                         <div className="space-y-2">
-                            <label className="text-[10px] font-black uppercase tracking-[0.2em] text-zinc-600 ml-1">Work Title</label>
-                            <input
-                                type="text"
-                                placeholder="e.g. Urgent Electrician needed for Wiring"
-                                className="w-full bg-zinc-900/40 border border-zinc-800 rounded-xl px-5 py-4 focus:outline-none focus:border-blue-500/50 focus:bg-zinc-900 transition-all text-white placeholder:text-zinc-700 font-medium"
-                                value={formData.title}
-                                onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-                            />
+                            <label className="text-[10px] font-black uppercase tracking-[0.2em] text-zinc-600 ml-1">
+                                Type of Work Needed
+                            </label>
+                            <div className="relative group">
+                                <Briefcase className="absolute left-4 top-1/2 -translate-y-1/2 text-zinc-600 group-focus-within:text-blue-400 w-5 h-5 transition-colors z-10 pointer-events-none" />
+
+                                <select
+                                    className="w-full bg-zinc-900/40 border border-zinc-800 rounded-xl pl-12 pr-10 py-4 focus:outline-none focus:border-blue-500/50 focus:bg-zinc-900 transition-all appearance-none cursor-pointer font-medium selection:bg-zinc-800"
+                                    style={{ color: formData.title ? '#d4d4d8' : '#52525b' }}
+                                    value={formData.title}
+                                    onChange={(e) => setFormData({ ...formData, title: e.target.value })}
+                                >
+                                    <option value="" disabled className="bg-[#030303] text-zinc-700">Select Service Required</option>
+                                    <option value="Plumber" className="bg-[#030303] text-zinc-300">Plumber (Plumbing Work)</option>
+                                    <option value="Carpenter" className="bg-[#030303] text-zinc-300">Carpenter (Woodwork)</option>
+                                    <option value="Electrician" className="bg-[#030303] text-zinc-300">Electrician (Wiring/Repairs)</option>
+                                    <option value="Painter" className="bg-[#030303] text-zinc-300">Painter (Painting & Polishing)</option>
+                                    <option value="Welder" className="bg-[#030303] text-zinc-300">Welder (Metal Fabrication)</option>
+                                    <option value="Tailor" className="bg-[#030303] text-zinc-300">Tailor (Stitching/Alterations)</option>
+                                    <option value="Tutor" className="bg-[#030303] text-zinc-300">Home Tutor (Education)</option>
+                                    <option value="Mason" className="bg-[#030303] text-zinc-300">Mason (Construction/Mistri)</option>
+                                    <option value="Mechanic" className="bg-[#030303] text-zinc-300">Vehicle Mechanic</option>
+                                    <option value="Cleaning" className="bg-[#030303] text-zinc-300">House Cleaning Service</option>
+                                    <option value="Gardener" className="bg-[#030303] text-zinc-300">Gardener</option>
+                                    <option value="Chef" className="bg-[#030303] text-zinc-300">Cook / Chef</option>
+                                    <option value="Barber" className="bg-[#030303] text-zinc-300">Barber (Home Service)</option>
+                                    <option value="Agent" className="bg-[#030303] text-zinc-300">Delivery Agent</option>
+                                </select>
+
+                                {/* Custom Chevron Icon */}
+                                <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-zinc-600 group-focus-within:text-blue-400 transition-colors">
+                                    <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M2 4L6 8L10 4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                                    </svg>
+                                </div>
+                            </div>
                         </div>
 
                         <div className="space-y-2">

@@ -34,7 +34,8 @@ export default function ActiveWorkPage() {
                     axios.get('/api/worker/details'),
                     axios.get('/api/all-work')
                 ]);
-                
+                console.log(workRes)
+                console.log(workRes)
                 if (workerRes.data.success && (workRes.status === 201 || workerRes.status === 201)) {
                     router.replace('/worker/create-profile');
                 }
@@ -44,6 +45,7 @@ export default function ActiveWorkPage() {
                 if (workRes.data.success) {
                     const active = workRes.data.allWork.filter((w: any) => w.isActive);
                     setActiveWorks(active);
+                     
                 }
             } catch (error) {
                 if(axios.isAxiosError(error) && error.response?.status === 402){

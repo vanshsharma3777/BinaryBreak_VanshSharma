@@ -39,6 +39,7 @@ export async function PUT(request:NextRequest , {params}:{params:Promise <{role:
             }, { status: 405 })
         }
         const { name, address, mobileNumber  } = await request.json()
+        console.log("name of vendor" , name)
         const location = await getLatitudeLongitude(address)
         console.log(location?.lat)
         console.log(location?.lng)
@@ -71,6 +72,7 @@ export async function PUT(request:NextRequest , {params}:{params:Promise <{role:
         })
     }
     else if (normalizedRole === 'vendor') {
+
         const isPersonExists = await prisma.myVendor.findFirst({
             where: {
                 userId: existingPerson?.id

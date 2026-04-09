@@ -24,7 +24,7 @@ export default function CreateVendorProfilePage() {
   const [loading, setLoading] = useState(false);
 
   const [formData, setFormData] = useState({
-    ownerName: '',
+    name: '',
     shopName: '',
     address: '',
     mobileNumber: '',
@@ -57,9 +57,9 @@ export default function CreateVendorProfilePage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const { ownerName, shopName, address, mobileNumber, age } = formData;
+    const { name, shopName, address, mobileNumber, age } = formData;
     
-    if (!ownerName || !shopName || !address || !mobileNumber || !age) {
+    if (!name || !shopName || !address || !mobileNumber || !age) {
       toast.error("Please fill all fields");
       return;
     }
@@ -148,8 +148,8 @@ export default function CreateVendorProfilePage() {
                       type="text"
                       className="w-full bg-zinc-900/40 border border-zinc-800 rounded-xl pl-12 pr-4 py-4 focus:outline-none focus:border-zinc-600 focus:bg-zinc-900 transition-all text-white placeholder:text-zinc-700"
                       placeholder="John Doe"
-                      value={formData.ownerName}
-                      onChange={(e) => handleTextChange(e, 'ownerName')}
+                      value={formData.name}
+                      onChange={(e) => handleTextChange(e, 'name')}
                     />
                   </div>
                 </div>

@@ -4,15 +4,13 @@ import axios from "axios";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { motion, AnimatePresence } from 'framer-motion'
+import { motion } from 'framer-motion'
 import { Loader } from '../../../components/loader'
 import {
   Briefcase,
   ChevronRight,
-  MapPin,
   User,
   ShieldCheck,
-  Timer
 } from 'lucide-react';
 import UserHeader from "@/components/userheader";
 import { getRoadDistance, getUserCoordinates } from "@/lib/getDistanceBetwenPoints";
@@ -32,16 +30,10 @@ export default function UserProfilePage() {
         setLoader(true);
         const res = await axios.get(`/api/all-worker&vendor`);
         const workers = res.data.allWorker || [];
-
-        // Set workers immediately so UI renders, but with distance in loading state
         setWorkerDetails(workers.map((w: any) => ({ ...w, travelLoading: true })));
         setLoader(false);
-
-        // Get live location
         const uCoords = await getUserCoordinates();
         setUserCoords(uCoords);
-        
-        // Background calculation
         calculateDistances(uCoords, workers);
 
       } catch (err) {
@@ -140,15 +132,15 @@ export default function UserProfilePage() {
                         <p className="text-[9px] uppercase tracking-widest text-zinc-600 font-black mb-1">Experience</p>
                         <p className="text-white text-xs font-bold">{worker.experience} Yrs</p>
                       </div>
-                      
+
                       {/* Distance Badge with "Calculating" state */}
                       <div className="bg-zinc-900/50 rounded-2xl p-3 text-center border border-zinc-800 flex flex-col items-center justify-center min-h-[50px]">
                         <p className="text-[9px] uppercase tracking-widest text-zinc-600 font-black mb-1">Commute</p>
                         {worker.travelLoading ? (
                           <div className="flex items-center gap-1">
-                             <span className="w-1 h-1 bg-blue-400 rounded-full animate-bounce" />
-                             <span className="w-1 h-1 bg-blue-400 rounded-full animate-bounce [animation-delay:-0.15s]" />
-                             <span className="w-1 h-1 bg-blue-400 rounded-full animate-bounce [animation-delay:-0.3s]" />
+                            <span className="w-1 h-1 bg-blue-400 rounded-full animate-bounce" />
+                            <span className="w-1 h-1 bg-blue-400 rounded-full animate-bounce [animation-delay:-0.15s]" />
+                            <span className="w-1 h-1 bg-blue-400 rounded-full animate-bounce [animation-delay:-0.3s]" />
                           </div>
                         ) : (
                           <div className="flex flex-col items-center">

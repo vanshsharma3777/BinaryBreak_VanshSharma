@@ -62,7 +62,7 @@ export default function CreateWorkerProfilePage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const { name, address, mobileNumber, occupation, dailyWage, age, experience, hourlyWage } = formData;
-    
+
     if (!name || !address || !mobileNumber || !occupation || !dailyWage || !experience || !hourlyWage || !age) {
       toast.error("Please fill all fields");
       return;
@@ -98,10 +98,10 @@ export default function CreateWorkerProfilePage() {
 
   return (
     <div className="w-full min-h-screen bg-[#030303] text-white overflow-x-hidden selection:bg-blue-500/30">
-      <Toaster 
+      <Toaster
         toastOptions={{
           style: { background: '#18181b', color: '#fff', border: '1px solid #27272a' }
-        }} 
+        }}
       />
 
       <div className="relative p-6 flex flex-col items-center justify-center min-h-screen py-20">
@@ -162,16 +162,39 @@ export default function CreateWorkerProfilePage() {
 
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <div className="space-y-2">
-                  <label className="text-[10px] font-black uppercase tracking-[0.2em] text-zinc-600 ml-1">Occupation</label>
+                  <label className="text-[10px] font-black uppercase tracking-[0.2em] text-zinc-600 ml-1">
+                    Occupation / Service Category
+                  </label>
                   <div className="relative group">
-                    <Briefcase className="absolute left-4 top-1/2 -translate-y-1/2 text-zinc-600 group-focus-within:text-cyan-400 w-5 h-5 transition-colors" />
-                    <input
-                      type="text"
-                      className="w-full bg-zinc-900/40 border border-zinc-800 rounded-xl pl-12 pr-4 py-4 focus:outline-none focus:border-zinc-600 focus:bg-zinc-900 transition-all text-white placeholder:text-zinc-700"
-                      placeholder="e.g. Plumber"
-                      value={formData.occupation}
-                      onChange={(e) => setFormData({...formData, occupation: e.target.value})}
-                    />
+                    <Briefcase className="absolute left-4 top-1/2 -translate-y-1/2 text-zinc-600 group-focus-within:text-cyan-400 w-5 h-5 transition-colors z-10 pointer-events-none" />
+
+                    <select
+                      className="w-full bg-zinc-900/40 border border-zinc-800 rounded-xl pl-12 pr-10 py-4 focus:outline-none focus:border-zinc-600 focus:bg-zinc-900 transition-all text-zinc-400 appearance-none cursor-pointer font-medium selection:bg-zinc-800"
+                      style={{ color: formData.occupation ? '#d4d4d8' : '#52525b' }} 
+                      onChange={(e) => setFormData({ ...formData, occupation: e.target.value })}
+                    >
+                      <option value="" disabled className="bg-[#030303] text-zinc-700">Select </option>
+                      <option value="Plumber" className="bg-[#030303] text-zinc-300">Plumber</option>
+                      <option value="Carpenter" className="bg-[#030303] text-zinc-300">Carpenter</option>
+                      <option value="Electrician" className="bg-[#030303] text-zinc-300">Electrician</option>
+                      <option value="Painter" className="bg-[#030303] text-zinc-300">Painting & Polishing</option>
+                      <option value="Welder" className="bg-[#030303] text-zinc-300">Welding & Fabrication</option> text-zinc-300
+                      <option value="Tailor" className="bg-[#030303] text-zinc-300">Tailor / Stitching</option>
+                      <option value="Tutor" className="bg-[#030303] text-zinc-300">Home Tutor</option>
+                      <option value="Mason" className="bg-[#030303] text-zinc-300">Mason (Mistri)</option>
+                      <option value="Mechanic" className="bg-[#030303] text-zinc-300">Vehicle Mechanic</option>
+                      <option value="Cleaning" className="bg-[#030303] text-zinc-300">House Cleaning</option>
+                      <option value="Gardener" className="bg-[#030303] text-zinc-300">Gardener</option>
+                      <option value="Chef" className="bg-[#030303] text-zinc-300">Cook / Chef</option>
+                      <option value="Barber" className="bg-[#030303] text-zinc-300">Barber / Salon</option>
+                    </select>
+
+                    {/* Custom Chevron Arrow */}
+                    <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-zinc-600 group-focus-within:text-cyan-400 transition-colors">
+                      <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M2 4L6 8L10 4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                      </svg>
+                    </div>
                   </div>
                 </div>
 

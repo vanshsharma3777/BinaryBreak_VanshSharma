@@ -37,7 +37,7 @@ export default function UserProfilePage() {
     async function getResponse() {
       setLoader(true)
       if (status === 'unauthenticated') {
-        router.replace('/')
+        router.replace('/signin')
       } else if (status === 'authenticated') {
         try {
           const res = await axios.get(`/api/user/details`)

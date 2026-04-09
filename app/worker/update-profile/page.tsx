@@ -36,7 +36,7 @@ export default function WorkerProfilePage() {
 
   useEffect(() => {
     if (status === 'unauthenticated') {
-      router.replace('/');
+      router.replace('/signin');
       return;
     }
 

@@ -1,6 +1,7 @@
 import { auth } from "@/lib/auth";
 import prisma from "@/lib/prisma";
 import { NextRequest, NextResponse } from "next/server";
+import { redis } from "@/lib/redis";
 
 export async function POST(request: NextRequest) {
     const session = await auth()
@@ -58,6 +59,7 @@ export async function POST(request: NextRequest) {
 
 export async function GET(request: NextRequest) {
     const session = await auth()
+
     if (!session) {
         return NextResponse.json({
             error: "Unauthorised",
@@ -70,6 +72,7 @@ export async function GET(request: NextRequest) {
             email: session.user?.email!
         }
     })
+
     if (!isUserExists) {
         return NextResponse.json({
             error: "User not found. Signin again",
@@ -90,24 +93,45 @@ export async function GET(request: NextRequest) {
         })
     }
 
-   const allWork = await prisma.work.findMany({
-    where:{
-        userId:getUser.id
-    },
-    omit:{
-        userId:true,
+    // Cache key
+    const cacheKey = `userWork:${getUser.id}`
+
+    // Check cache
+    const cached = await redis.get(cacheKey)
+
+    if (cached) {
+        console.log("Cache Hit")
+        return NextResponse.json({
+            success: true,
+            allWork: cached
+        })
     }
-   })
 
-   if(!allWork){
+    console.log("Cache Miss")
+
+    const allWork = await prisma.work.findMany({
+        where: {
+            userId: getUser.id
+        },
+        omit: {
+            userId: true,
+        }
+    })
+
+    if (!allWork || allWork.length === 0) {
+        return NextResponse.json({
+            success: true,
+            msg: "Work not exists"
+        }, { status: 200 })
+    }
+
+    // Store in redis
+    await redis.set(cacheKey, allWork, {
+        ex: 60
+    })
+
     return NextResponse.json({
-        success:true,
-    msg:"Work not exists"
-    } , {status:201})
-   }
-   return NextResponse.json({
-    success:true,
-    allWork
-   })
+        success: true,
+        allWork
+    })
 }
-

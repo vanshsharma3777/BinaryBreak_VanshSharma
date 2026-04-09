@@ -31,7 +31,7 @@ export default function UpdateVendorProfilePage() {
 
   useEffect(() => {
     if (status === 'unauthenticated') {
-      router.replace('/');
+      router.replace('/signin');
       return;
     }
 

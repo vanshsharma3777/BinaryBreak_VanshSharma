@@ -36,7 +36,7 @@ export default function WorkerHeader({ tab }: { tab: string }): JSX.Element | nu
         {/* Brand Logo */}
         <span 
           className="font-black text-2xl tracking-tighter cursor-pointer text-white" 
-          onClick={() => router.push('/')} 
+          onClick={() => router.push('/signin')} 
         >
           Kaam<span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-emerald-400">Bazar</span>
         </span>

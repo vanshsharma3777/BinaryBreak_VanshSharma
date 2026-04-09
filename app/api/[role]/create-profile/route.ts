@@ -48,16 +48,16 @@ export async function POST(request: NextRequest, { params }: { params: Promise<{
                 name,
                 userId: person?.id!,
                 mobileNumber,
-                lat:location?.lat,
-                lng:location?.lng,
+                lat: location?.lat,
+                lng: location?.lng,
                 address,
                 role
             },
             select: {
                 name: true,
                 mobileNumber: true,
-                lat:true,
-                lng:true,
+                lat: true,
+                lng: true,
                 address: true,
                 role: true
             }
@@ -83,30 +83,30 @@ export async function POST(request: NextRequest, { params }: { params: Promise<{
         const { name, mobileNumber, address, age, shopName } = await request.json()
         const ageInNumber = Number(age)
         const createdvendor = await prisma.myVendor.create({
-                data: {
-                    name,
-                    userId: person?.id!,
-                    mobileNumber,
-                    shopName,
-                    address,
-                    age:ageInNumber,
-                    role
-                },
-                select: {
-                    name: true,
-                    shopName: true,
-                    mobileNumber: true,
-                    address: true,
-                    role: true,
-                    age: true
+            data: {
+                name,
+                userId: person?.id!,
+                mobileNumber,
+                shopName,
+                address,
+                age: ageInNumber,
+                role
+            },
+            select: {
+                name: true,
+                shopName: true,
+                mobileNumber: true,
+                address: true,
+                role: true,
+                age: true
 
-                }
-            })
-            return NextResponse.json({
-                success: true,
-                createdvendor,
-                msg: "vendor creted successfuly"
-            })
+            }
+        })
+        return NextResponse.json({
+            success: true,
+            createdvendor,
+            msg: "vendor creted successfuly"
+        })
     }
     else if (role === 'worker') {
         const isworkerExists = await prisma.myWorker.findFirst({
@@ -120,40 +120,74 @@ export async function POST(request: NextRequest, { params }: { params: Promise<{
                 success: false
             }, { status: 405 })
         }
-        let { name, mobileNumber, dailyWage , age ,occupation,hourlyWages, experience,address } = await request.json()
+        let { name, mobileNumber, dailyWage, age, occupation, hourlyWages, experience, address, vehicleType, drivingLicense, vehicleNumber } = await request.json()
         const location = await getLatitudeLongitude(address)
-             dailyWage = Number(dailyWage)
-             age = Number(age)
-             hourlyWages = Number(hourlyWages)
-             experience = Number(experience)
-            const createdworker = await prisma.myWorker.create({
+        dailyWage = Number(dailyWage)
+        age = Number(age)
+        hourlyWages = Number(hourlyWages)
+        experience = Number(experience)
+        const createdworker = await prisma.myWorker.create({
+            data: {
+                name,
+                userId: person?.id!,
+                mobileNumber,
+                occupation,
+                lat: location?.lat,
+                experience,
+                lan: location?.lng,
+                dailyWage,
+                hourlyWages,
+                age,
+                role
+            },
+            select: {
+                name: true,
+                mobileNumber: true,
+                occupation: true,
+                lat: true,
+                lan: true,
+                experience,
+                hourlyWages,
+                dailyWage: true,
+                age: true,
+                role: true
+            }
+        })
+        if (occupation === 'Agent') {
+            const workerId = await prisma.myWorker.findFirst({
+                where:{
+                    mobileNumber : mobileNumber
+                }
+            }) 
+            if (vehicleType !== 'Cycle') {
+                if (!vehicleNumber || !drivingLicense) {
+                    return NextResponse.json({
+                        error: "Vehicle number or driving licence missing",
+                        success: false
+                    }, { status: 501 })
+                }
+                const createBikerAgent = await prisma.agent.create({
+                    data: {
+                        vehicleType: vehicleType,
+                        myWorkerId : workerId?.id,
+                        vehicleNumber: vehicleNumber,
+                        drivingLicense: drivingLicense
+                    }
+                })
+                console.log(createBikerAgent)
+            }
+            if(vehicleType==='Cycle'){
+                const createCycleAgent = await prisma.agent.create({
                 data: {
-                    name,
-                    userId: person?.id!,
-                    mobileNumber,
-                    occupation,
-                    lat: location?.lat,
-                    experience,
-                    lan: location?.lng,
-                    dailyWage,
-                    hourlyWages,
-                    age,
-                    role
-                },
-                select: {
-                    name: true,
-                    mobileNumber: true,
-                    occupation: true,
-                    lat:true,
-                    lan:true,
-                    experience,
-                    hourlyWages,
-                    dailyWage: true,
-                    age: true,
-                    role: true
+                    vehicleType: vehicleType,
+                    myWorkerId : workerId?.id,
                 }
             })
-    
+            console.log(createCycleAgent)
+            }
+            
+        }
+
         return NextResponse.json({
             success: true,
             createdworker,

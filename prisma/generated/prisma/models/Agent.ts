@@ -26,25 +26,28 @@ export type AggregateAgent = {
 
 export type AgentMinAggregateOutputType = {
   id: string | null
-  userId: string | null
   isOnline: boolean | null
-  vechileType: string | null
+  vehicleType: string | null
+  vehicleNumber: string | null
+  drivingLicense: string | null
   myWorkerId: string | null
 }
 
 export type AgentMaxAggregateOutputType = {
   id: string | null
-  userId: string | null
   isOnline: boolean | null
-  vechileType: string | null
+  vehicleType: string | null
+  vehicleNumber: string | null
+  drivingLicense: string | null
   myWorkerId: string | null
 }
 
 export type AgentCountAggregateOutputType = {
   id: number
-  userId: number
   isOnline: number
-  vechileType: number
+  vehicleType: number
+  vehicleNumber: number
+  drivingLicense: number
   myWorkerId: number
   _all: number
 }
@@ -52,25 +55,28 @@ export type AgentCountAggregateOutputType = {
 
 export type AgentMinAggregateInputType = {
   id?: true
-  userId?: true
   isOnline?: true
-  vechileType?: true
+  vehicleType?: true
+  vehicleNumber?: true
+  drivingLicense?: true
   myWorkerId?: true
 }
 
 export type AgentMaxAggregateInputType = {
   id?: true
-  userId?: true
   isOnline?: true
-  vechileType?: true
+  vehicleType?: true
+  vehicleNumber?: true
+  drivingLicense?: true
   myWorkerId?: true
 }
 
 export type AgentCountAggregateInputType = {
   id?: true
-  userId?: true
   isOnline?: true
-  vechileType?: true
+  vehicleType?: true
+  vehicleNumber?: true
+  drivingLicense?: true
   myWorkerId?: true
   _all?: true
 }
@@ -149,9 +155,10 @@ export type AgentGroupByArgs<ExtArgs extends runtime.Types.Extensions.InternalAr
 
 export type AgentGroupByOutputType = {
   id: string
-  userId: string
   isOnline: boolean
-  vechileType: string
+  vehicleType: string
+  vehicleNumber: string | null
+  drivingLicense: string | null
   myWorkerId: string | null
   _count: AgentCountAggregateOutputType | null
   _min: AgentMinAggregateOutputType | null
@@ -178,18 +185,20 @@ export type AgentWhereInput = {
   OR?: Prisma.AgentWhereInput[]
   NOT?: Prisma.AgentWhereInput | Prisma.AgentWhereInput[]
   id?: Prisma.StringFilter<"Agent"> | string
-  userId?: Prisma.StringFilter<"Agent"> | string
   isOnline?: Prisma.BoolFilter<"Agent"> | boolean
-  vechileType?: Prisma.StringFilter<"Agent"> | string
+  vehicleType?: Prisma.StringFilter<"Agent"> | string
+  vehicleNumber?: Prisma.StringNullableFilter<"Agent"> | string | null
+  drivingLicense?: Prisma.StringNullableFilter<"Agent"> | string | null
   myWorkerId?: Prisma.StringNullableFilter<"Agent"> | string | null
   worker?: Prisma.XOR<Prisma.MyWorkerNullableScalarRelationFilter, Prisma.MyWorkerWhereInput> | null
 }
 
 export type AgentOrderByWithRelationInput = {
   id?: Prisma.SortOrder
-  userId?: Prisma.SortOrder
   isOnline?: Prisma.SortOrder
-  vechileType?: Prisma.SortOrder
+  vehicleType?: Prisma.SortOrder
+  vehicleNumber?: Prisma.SortOrderInput | Prisma.SortOrder
+  drivingLicense?: Prisma.SortOrderInput | Prisma.SortOrder
   myWorkerId?: Prisma.SortOrderInput | Prisma.SortOrder
   worker?: Prisma.MyWorkerOrderByWithRelationInput
 }
@@ -199,18 +208,20 @@ export type AgentWhereUniqueInput = Prisma.AtLeast<{
   AND?: Prisma.AgentWhereInput | Prisma.AgentWhereInput[]
   OR?: Prisma.AgentWhereInput[]
   NOT?: Prisma.AgentWhereInput | Prisma.AgentWhereInput[]
-  userId?: Prisma.StringFilter<"Agent"> | string
   isOnline?: Prisma.BoolFilter<"Agent"> | boolean
-  vechileType?: Prisma.StringFilter<"Agent"> | string
+  vehicleType?: Prisma.StringFilter<"Agent"> | string
+  vehicleNumber?: Prisma.StringNullableFilter<"Agent"> | string | null
+  drivingLicense?: Prisma.StringNullableFilter<"Agent"> | string | null
   myWorkerId?: Prisma.StringNullableFilter<"Agent"> | string | null
   worker?: Prisma.XOR<Prisma.MyWorkerNullableScalarRelationFilter, Prisma.MyWorkerWhereInput> | null
 }, "id">
 
 export type AgentOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
-  userId?: Prisma.SortOrder
   isOnline?: Prisma.SortOrder
-  vechileType?: Prisma.SortOrder
+  vehicleType?: Prisma.SortOrder
+  vehicleNumber?: Prisma.SortOrderInput | Prisma.SortOrder
+  drivingLicense?: Prisma.SortOrderInput | Prisma.SortOrder
   myWorkerId?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.AgentCountOrderByAggregateInput
   _max?: Prisma.AgentMaxOrderByAggregateInput
@@ -222,64 +233,72 @@ export type AgentScalarWhereWithAggregatesInput = {
   OR?: Prisma.AgentScalarWhereWithAggregatesInput[]
   NOT?: Prisma.AgentScalarWhereWithAggregatesInput | Prisma.AgentScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"Agent"> | string
-  userId?: Prisma.StringWithAggregatesFilter<"Agent"> | string
   isOnline?: Prisma.BoolWithAggregatesFilter<"Agent"> | boolean
-  vechileType?: Prisma.StringWithAggregatesFilter<"Agent"> | string
+  vehicleType?: Prisma.StringWithAggregatesFilter<"Agent"> | string
+  vehicleNumber?: Prisma.StringNullableWithAggregatesFilter<"Agent"> | string | null
+  drivingLicense?: Prisma.StringNullableWithAggregatesFilter<"Agent"> | string | null
   myWorkerId?: Prisma.StringNullableWithAggregatesFilter<"Agent"> | string | null
 }
 
 export type AgentCreateInput = {
   id?: string
-  userId: string
   isOnline?: boolean
-  vechileType: string
+  vehicleType: string
+  vehicleNumber?: string | null
+  drivingLicense?: string | null
   worker?: Prisma.MyWorkerCreateNestedOneWithoutAgentInput
 }
 
 export type AgentUncheckedCreateInput = {
   id?: string
-  userId: string
   isOnline?: boolean
-  vechileType: string
+  vehicleType: string
+  vehicleNumber?: string | null
+  drivingLicense?: string | null
   myWorkerId?: string | null
 }
 
 export type AgentUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  userId?: Prisma.StringFieldUpdateOperationsInput | string
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  vechileType?: Prisma.StringFieldUpdateOperationsInput | string
+  vehicleType?: Prisma.StringFieldUpdateOperationsInput | string
+  vehicleNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  drivingLicense?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   worker?: Prisma.MyWorkerUpdateOneWithoutAgentNestedInput
 }
 
 export type AgentUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  userId?: Prisma.StringFieldUpdateOperationsInput | string
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  vechileType?: Prisma.StringFieldUpdateOperationsInput | string
+  vehicleType?: Prisma.StringFieldUpdateOperationsInput | string
+  vehicleNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  drivingLicense?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   myWorkerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type AgentCreateManyInput = {
   id?: string
-  userId: string
   isOnline?: boolean
-  vechileType: string
+  vehicleType: string
+  vehicleNumber?: string | null
+  drivingLicense?: string | null
   myWorkerId?: string | null
 }
 
 export type AgentUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  userId?: Prisma.StringFieldUpdateOperationsInput | string
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  vechileType?: Prisma.StringFieldUpdateOperationsInput | string
+  vehicleType?: Prisma.StringFieldUpdateOperationsInput | string
+  vehicleNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  drivingLicense?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type AgentUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  userId?: Prisma.StringFieldUpdateOperationsInput | string
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  vechileType?: Prisma.StringFieldUpdateOperationsInput | string
+  vehicleType?: Prisma.StringFieldUpdateOperationsInput | string
+  vehicleNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  drivingLicense?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   myWorkerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
@@ -295,25 +314,28 @@ export type AgentOrderByRelationAggregateInput = {
 
 export type AgentCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  userId?: Prisma.SortOrder
   isOnline?: Prisma.SortOrder
-  vechileType?: Prisma.SortOrder
+  vehicleType?: Prisma.SortOrder
+  vehicleNumber?: Prisma.SortOrder
+  drivingLicense?: Prisma.SortOrder
   myWorkerId?: Prisma.SortOrder
 }
 
 export type AgentMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  userId?: Prisma.SortOrder
   isOnline?: Prisma.SortOrder
-  vechileType?: Prisma.SortOrder
+  vehicleType?: Prisma.SortOrder
+  vehicleNumber?: Prisma.SortOrder
+  drivingLicense?: Prisma.SortOrder
   myWorkerId?: Prisma.SortOrder
 }
 
 export type AgentMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  userId?: Prisma.SortOrder
   isOnline?: Prisma.SortOrder
-  vechileType?: Prisma.SortOrder
+  vehicleType?: Prisma.SortOrder
+  vehicleNumber?: Prisma.SortOrder
+  drivingLicense?: Prisma.SortOrder
   myWorkerId?: Prisma.SortOrder
 }
 
@@ -361,16 +383,18 @@ export type AgentUncheckedUpdateManyWithoutWorkerNestedInput = {
 
 export type AgentCreateWithoutWorkerInput = {
   id?: string
-  userId: string
   isOnline?: boolean
-  vechileType: string
+  vehicleType: string
+  vehicleNumber?: string | null
+  drivingLicense?: string | null
 }
 
 export type AgentUncheckedCreateWithoutWorkerInput = {
   id?: string
-  userId: string
   isOnline?: boolean
-  vechileType: string
+  vehicleType: string
+  vehicleNumber?: string | null
+  drivingLicense?: string | null
 }
 
 export type AgentCreateOrConnectWithoutWorkerInput = {
@@ -404,78 +428,87 @@ export type AgentScalarWhereInput = {
   OR?: Prisma.AgentScalarWhereInput[]
   NOT?: Prisma.AgentScalarWhereInput | Prisma.AgentScalarWhereInput[]
   id?: Prisma.StringFilter<"Agent"> | string
-  userId?: Prisma.StringFilter<"Agent"> | string
   isOnline?: Prisma.BoolFilter<"Agent"> | boolean
-  vechileType?: Prisma.StringFilter<"Agent"> | string
+  vehicleType?: Prisma.StringFilter<"Agent"> | string
+  vehicleNumber?: Prisma.StringNullableFilter<"Agent"> | string | null
+  drivingLicense?: Prisma.StringNullableFilter<"Agent"> | string | null
   myWorkerId?: Prisma.StringNullableFilter<"Agent"> | string | null
 }
 
 export type AgentCreateManyWorkerInput = {
   id?: string
-  userId: string
   isOnline?: boolean
-  vechileType: string
+  vehicleType: string
+  vehicleNumber?: string | null
+  drivingLicense?: string | null
 }
 
 export type AgentUpdateWithoutWorkerInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  userId?: Prisma.StringFieldUpdateOperationsInput | string
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  vechileType?: Prisma.StringFieldUpdateOperationsInput | string
+  vehicleType?: Prisma.StringFieldUpdateOperationsInput | string
+  vehicleNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  drivingLicense?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type AgentUncheckedUpdateWithoutWorkerInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  userId?: Prisma.StringFieldUpdateOperationsInput | string
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  vechileType?: Prisma.StringFieldUpdateOperationsInput | string
+  vehicleType?: Prisma.StringFieldUpdateOperationsInput | string
+  vehicleNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  drivingLicense?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type AgentUncheckedUpdateManyWithoutWorkerInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  userId?: Prisma.StringFieldUpdateOperationsInput | string
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  vechileType?: Prisma.StringFieldUpdateOperationsInput | string
+  vehicleType?: Prisma.StringFieldUpdateOperationsInput | string
+  vehicleNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  drivingLicense?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 
 
 export type AgentSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  userId?: boolean
   isOnline?: boolean
-  vechileType?: boolean
+  vehicleType?: boolean
+  vehicleNumber?: boolean
+  drivingLicense?: boolean
   myWorkerId?: boolean
   worker?: boolean | Prisma.Agent$workerArgs<ExtArgs>
 }, ExtArgs["result"]["agent"]>
 
 export type AgentSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  userId?: boolean
   isOnline?: boolean
-  vechileType?: boolean
+  vehicleType?: boolean
+  vehicleNumber?: boolean
+  drivingLicense?: boolean
   myWorkerId?: boolean
   worker?: boolean | Prisma.Agent$workerArgs<ExtArgs>
 }, ExtArgs["result"]["agent"]>
 
 export type AgentSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  userId?: boolean
   isOnline?: boolean
-  vechileType?: boolean
+  vehicleType?: boolean
+  vehicleNumber?: boolean
+  drivingLicense?: boolean
   myWorkerId?: boolean
   worker?: boolean | Prisma.Agent$workerArgs<ExtArgs>
 }, ExtArgs["result"]["agent"]>
 
 export type AgentSelectScalar = {
   id?: boolean
-  userId?: boolean
   isOnline?: boolean
-  vechileType?: boolean
+  vehicleType?: boolean
+  vehicleNumber?: boolean
+  drivingLicense?: boolean
   myWorkerId?: boolean
 }
 
-export type AgentOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "isOnline" | "vechileType" | "myWorkerId", ExtArgs["result"]["agent"]>
+export type AgentOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "isOnline" | "vehicleType" | "vehicleNumber" | "drivingLicense" | "myWorkerId", ExtArgs["result"]["agent"]>
 export type AgentInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   worker?: boolean | Prisma.Agent$workerArgs<ExtArgs>
 }
@@ -493,9 +526,10 @@ export type $AgentPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
-    userId: string
     isOnline: boolean
-    vechileType: string
+    vehicleType: string
+    vehicleNumber: string | null
+    drivingLicense: string | null
     myWorkerId: string | null
   }, ExtArgs["result"]["agent"]>
   composites: {}
@@ -922,9 +956,10 @@ export interface Prisma__AgentClient<T, Null = never, ExtArgs extends runtime.Ty
  */
 export interface AgentFieldRefs {
   readonly id: Prisma.FieldRef<"Agent", 'String'>
-  readonly userId: Prisma.FieldRef<"Agent", 'String'>
   readonly isOnline: Prisma.FieldRef<"Agent", 'Boolean'>
-  readonly vechileType: Prisma.FieldRef<"Agent", 'String'>
+  readonly vehicleType: Prisma.FieldRef<"Agent", 'String'>
+  readonly vehicleNumber: Prisma.FieldRef<"Agent", 'String'>
+  readonly drivingLicense: Prisma.FieldRef<"Agent", 'String'>
   readonly myWorkerId: Prisma.FieldRef<"Agent", 'String'>
 }
     

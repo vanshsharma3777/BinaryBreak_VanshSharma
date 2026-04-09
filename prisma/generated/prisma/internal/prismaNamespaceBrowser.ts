@@ -195,9 +195,10 @@ export type WorkScalarFieldEnum = (typeof WorkScalarFieldEnum)[keyof typeof Work
 
 export const AgentScalarFieldEnum = {
   id: 'id',
-  userId: 'userId',
   isOnline: 'isOnline',
-  vechileType: 'vechileType',
+  vehicleType: 'vehicleType',
+  vehicleNumber: 'vehicleNumber',
+  drivingLicense: 'drivingLicense',
   myWorkerId: 'myWorkerId'
 } as const
 

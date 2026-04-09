@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from 'react';
-import { motion } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
 import { useRouter } from 'next/navigation';
 import axios from 'axios';
 import { toast, Toaster } from 'react-hot-toast';
@@ -14,7 +14,10 @@ import {
   Briefcase,
   IndianRupee,
   Calendar,
-  TimerReset
+  TimerReset,
+  Bike,
+  Hash,
+  CreditCard
 } from 'lucide-react';
 import { useSession } from 'next-auth/react';
 import { Loader } from '@/components/loader';
@@ -32,7 +35,10 @@ export default function CreateWorkerProfilePage() {
     hourlyWage: '',
     experience: '',
     dailyWage: '',
-    age: ''
+    age: '',
+    vehicleType: '',
+    vehicleNumber: '',
+    drivingLicense: ''
   });
 
   useEffect(() => {
@@ -61,8 +67,19 @@ export default function CreateWorkerProfilePage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const { name, address, mobileNumber, occupation, dailyWage, age, experience, hourlyWage } = formData;
-
+    const { name, address, mobileNumber, occupation, dailyWage, age, experience, hourlyWage, vehicleType, vehicleNumber, drivingLicense } = formData;
+    if (occupation === "Agent") {
+      if (!vehicleType) {
+        toast.error("Please select a vehicle type");
+        return;
+      }
+      if (vehicleType !== "Cycle") {
+        if (!vehicleNumber || !drivingLicense) {
+          toast.error("Vehicle Number and License are required for motorized vehicles");
+          return;
+        }
+      }
+    }
     if (!name || !address || !mobileNumber || !occupation || !dailyWage || !experience || !hourlyWage || !age) {
       toast.error("Please fill all fields");
       return;
@@ -80,7 +97,9 @@ export default function CreateWorkerProfilePage() {
 
     try {
       setLoading(true);
+      console.log(occupation)
       const res = await axios.post('/api/worker/create-profile', formData);
+      console.log(res.data)
       if (res.status === 200 || res.status === 201) {
         toast.success("Worker profile created!");
         router.replace('/worker/profile');
@@ -163,14 +182,14 @@ export default function CreateWorkerProfilePage() {
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <div className="space-y-2">
                   <label className="text-[10px] font-black uppercase tracking-[0.2em] text-zinc-600 ml-1">
-                    Occupation / Service Category
+                    Occupation
                   </label>
                   <div className="relative group">
                     <Briefcase className="absolute left-4 top-1/2 -translate-y-1/2 text-zinc-600 group-focus-within:text-cyan-400 w-5 h-5 transition-colors z-10 pointer-events-none" />
 
                     <select
                       className="w-full bg-zinc-900/40 border border-zinc-800 rounded-xl pl-12 pr-10 py-4 focus:outline-none focus:border-zinc-600 focus:bg-zinc-900 transition-all text-zinc-400 appearance-none cursor-pointer font-medium selection:bg-zinc-800"
-                      style={{ color: formData.occupation ? '#d4d4d8' : '#52525b' }} 
+                      style={{ color: formData.occupation ? '#d4d4d8' : '#52525b' }}
                       onChange={(e) => setFormData({ ...formData, occupation: e.target.value })}
                     >
                       <option value="" disabled className="bg-[#030303] text-zinc-700">Select </option>
@@ -187,9 +206,9 @@ export default function CreateWorkerProfilePage() {
                       <option value="Gardener" className="bg-[#030303] text-zinc-300">Gardener</option>
                       <option value="Chef" className="bg-[#030303] text-zinc-300">Cook / Chef</option>
                       <option value="Barber" className="bg-[#030303] text-zinc-300">Barber / Salon</option>
+                      <option value="Agent" className="bg-[#030303] text-zinc-300">Delivery Agent</option>
                     </select>
 
-                    {/* Custom Chevron Arrow */}
                     <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-zinc-600 group-focus-within:text-cyan-400 transition-colors">
                       <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M2 4L6 8L10 4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
@@ -227,6 +246,67 @@ export default function CreateWorkerProfilePage() {
                   </div>
                 </div>
               </div>
+              <AnimatePresence>
+                {formData.occupation === "Agent" && (
+                  <motion.div
+                    initial={{ opacity: 0, height: 0 }}
+                    animate={{ opacity: 1, height: "auto" }}
+                    exit={{ opacity: 0, height: 0 }}
+                    className="space-y-6 pt-4 border-t border-zinc-900"
+                  >
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                      <div className="space-y-2">
+                        <label className="text-[10px] font-black uppercase tracking-[0.2em] text-blue-400 ml-1">Vehicle Type</label>
+                        <div className="relative group">
+                          <Bike className="absolute left-4 top-1/2 -translate-y-1/2 text-zinc-600 group-focus-within:text-blue-400 w-5 h-5 transition-colors z-10 pointer-events-none" />
+                          <select
+                            className="w-full bg-zinc-900/40 border border-emerald-900/30 rounded-xl pl-12 pr-10 py-4 focus:outline-none focus:border-blue-500/50 focus:bg-zinc-900 transition-all text-zinc-400 appearance-none cursor-pointer font-medium"
+                            value={formData.vehicleType}
+                            onChange={(e) => setFormData({ ...formData, vehicleType: e.target.value })}
+                          >
+                            <option value="" disabled className="bg-[#030303] text-zinc-700">Select Mode</option>
+                            <option value="Cycle" className="bg-[#030303]">Cycle</option>
+                            <option value="Bike" className="bg-[#030303]">Bike / Motorcycle</option>
+                            <option value="Scooter" className="bg-[#030303]">Scooter</option>
+                            <option value="Car" className="bg-[#030303]">Mini-Van / Car</option>
+                          </select>
+                        </div>
+                      </div>
+                      {formData.vehicleType && formData.vehicleType !== "Cycle" && (
+                        <>
+                          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-2">
+                            <label className="text-[10px] font-black uppercase tracking-[0.2em] text-zinc-600 ml-1">Vehicle Number</label>
+                            <div className="relative group">
+                              <Hash className="absolute left-4 top-1/2 -translate-y-1/2 text-zinc-600 group-focus-within:text-blue-400 w-5 h-5 transition-colors" />
+                              <input
+                                type="text"
+                                className="w-full bg-zinc-900/40 border border-zinc-800 rounded-xl pl-12 pr-4 py-4 focus:outline-none focus:border-zinc-600 focus:bg-zinc-900 transition-all text-white placeholder:text-zinc-700"
+                                placeholder="UP 32 XX 0000"
+                                value={formData.vehicleNumber}
+                                onChange={(e) => setFormData({ ...formData, vehicleNumber: e.target.value.toUpperCase() })}
+                              />
+                            </div>
+                          </motion.div>
+
+                          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-2">
+                            <label className="text-[10px] font-black uppercase tracking-[0.2em] text-zinc-600 ml-1">DL Number</label>
+                            <div className="relative group">
+                              <CreditCard className="absolute left-4 top-1/2 -translate-y-1/2 text-zinc-600 group-focus-within:text-blue-400 w-5 h-5 transition-colors" />
+                              <input
+                                type="text"
+                                className="w-full bg-zinc-900/40 border border-zinc-800 rounded-xl pl-12 pr-4 py-4 focus:outline-none focus:border-zinc-600 focus:bg-zinc-900 transition-all text-white placeholder:text-zinc-700"
+                                placeholder="License ID"
+                                value={formData.drivingLicense}
+                                onChange={(e) => setFormData({ ...formData, drivingLicense: e.target.value.toUpperCase() })}
+                              />
+                            </div>
+                          </motion.div>
+                        </>
+                      )}
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="space-y-2">

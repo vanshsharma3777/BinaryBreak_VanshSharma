@@ -126,9 +126,10 @@ model Work {
 
 model Agent {
   id          String    @id @default(cuid())
-  userId      String
   isOnline    Boolean   @default(false)
-  vechileType String
+  vehicleType String
+  vehicleNumber String?
+  drivingLicense String?
   myWorkerId  String?
   worker      MyWorker? @relation(fields: [myWorkerId], references: [id])
 }
